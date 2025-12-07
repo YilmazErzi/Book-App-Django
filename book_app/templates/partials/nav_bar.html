@@ -1,0 +1,46 @@
+    <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <div class="container">
+            <i class="fa-solid fa-book text-white me-1"></i>
+            <a href="/" class="navbar-brand">BookApp</a>
+            <button class="navbar-toggler" type ="button" data-bs-toggle="collapse" data-bs-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id ="navbar">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a href="/contact" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/about" class="nav-link">About</a>
+                    </li>
+                </ul>
+
+                
+                <ul class="navbar-nav me-0">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Welcome, {{user.username}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'cart_detail' %}" class="nav-link">Cart</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'user_logout' %}" class="nav-link">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'pass_change' %}" class="nav-link">Change Password</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'user_login'%}" class="nav-link">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'user_register' %}" class="nav-link">Register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <i class="fa-solid fa-circle-user fa-lg text-white me-1"></i>
+            </div>
+        </div>
+    </nav>

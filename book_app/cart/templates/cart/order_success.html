@@ -1,0 +1,44 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% load humanize %} 
+
+{% block title %}Order Successful{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow p-4 text-center">
+        <i class="fas fa-check-circle fa-5x text-success mb-3"></i>
+        
+        <h2>🎉 Your Order Has Been Successfully Placed!</h2>
+        <hr>
+        
+        <p class="lead">
+            **Thank you, {{ order.user.username }}!** Your simulation order through our book recommendation system has been successfully created.
+        </p>
+
+        <div class="row mt-4 mb-4">
+            <div class="col-md-6 mx-auto">
+                <ul class="list-group list-group-flush text-start">
+                    <li class="list-group-item"><strong>Order Number:</strong> #{{ order.id }}</li>
+                    <li class="list-group-item"><strong>Order Date:</strong> {{ order.created_at|date:"d M Y H:i" }}</li>
+                    <li class="list-group-item text-success fs-4">
+                        <strong>Total Amount:</strong> {{ order.total_price|floatformat:2 }} TL
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <h4>Order Summary:</h4>
+        <ul class="list-unstyled">
+            {% for item in order_items %}
+                <li>{{ item.quantity }} x {{ item.product.name }} ({{ item.price|floatformat:2 }} TL/unit)</li>
+            {% endfor %}
+        </ul>
+        
+        <div class="mt-4">
+            <a href="{% url 'home' %}" class="btn btn-secondary me-2">Get More Book Recommendations</a>
+            <a href="/" class="btn btn-outline-primary">Go to Homepage</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
