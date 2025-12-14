@@ -2,7 +2,7 @@ asgiref==3.11.0
 beautifulsoup4==4.14.3
 certifi==2025.11.12
 charset-normalizer==3.4.4
-Django==6.0
+Django==5.1.7
 djangorestframework==3.16.1
 idna==3.11
 joblib==1.5.2
