@@ -83,6 +83,50 @@
     
     <hr class="my-5 opacity-25">
 
+    {% if hf_recommendations and mode != 'search' %}
+    <div class="container mb-5">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold"><i class="fas fa-magic text-warning me-2"></i>Sizin İçin Seçtiklerimiz</h2>
+            <p class="text-muted">Okuma geçmişinize dayalı yapay zeka önerileri</p>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-3">
+            {% for rec in hf_recommendations %}
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm hover-up">
+                    <div class="position-relative text-center p-2 bg-light" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                        <img src="{{ rec.Image_URL }}" alt="{{ rec.Book }}" class="shadow-sm rounded"
+                             style="max-height: 180px; width: auto; object-fit: contain;">
+                        {% if rec.score %}
+                        <span class="position-absolute top-0 end-0 badge bg-primary m-2" style="font-size: 0.7rem;">
+                            Skor: {{ rec.score|floatformat:1 }}
+                        </span>
+                        {% endif %}
+                    </div>
+                    <div class="card-body p-2 text-center">
+                        <h6 class="card-title fw-bold text-truncate" style="font-size: 0.9rem;" title="{{ rec.Book }}">{{ rec.Book }}</h6>
+                        <small class="text-muted d-block mb-2" style="font-size: 0.8rem;">{{ rec.Author }}</small>
+
+                        {% if rec.db_id %}
+                            <form action="{% url 'add_to_cart' rec.db_id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-success btn-sm w-100" style="font-size: 0.8rem;">
+                                    <i class="fas fa-cart-plus"></i> {{ rec.Price }} TL
+                                </button>
+                            </form>
+                        {% else %}
+                            <button class="btn btn-outline-secondary btn-sm w-100" disabled style="font-size: 0.8rem;">
+                                Tükendi / Stokta Yok
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <hr class="my-5 opacity-25">
+    </div>
+    {% endif %}
     <div class="row justify-content-center mb-5">
         <div class="col-lg-8 text-center">
             <h2 class="fw-bold mb-2">Need a Recommendation?</h2>
