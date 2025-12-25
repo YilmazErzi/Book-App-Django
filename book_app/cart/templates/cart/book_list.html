@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Book List (Test Mode){% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>📚 Book List</h2>
+        <span class="badge bg-warning text-dark">Test Mode: Sold Items Only</span>
+    </div>
+
+    {% if products %}
+    <div class="row">
+        {% for product in products %}
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-img-top bg-light text-center py-4">
+                    <i class="fas fa-book fa-3x text-secondary"></i>
+                </div>
+                
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title text-truncate">{{ product.name }}</h5>
+                    <p class="card-text text-muted small">{{ product.author }}</p>
+                    
+                    <div class="mt-auto d-grid gap-2">
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-info text-white">
+                            <i class="fas fa-eye"></i> View & Recommendations
+                        </a>
+                        
+                        <form action="{% url 'add_to_cart' product.id %}" method="POST" class="d-grid">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-primary btn-sm">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-info">
+        No sales recorded yet. To test the system, please add random products to your cart and complete a purchase.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
